@@ -1,0 +1,12 @@
+    <div class="card ">
+    <h5 class="card-header">Last Activities</h5>
+        <div class="card-body">
+            {% for activity in activities %}
+            <a href="{% url 'room' activity.room.pk %}" style="text-decoration: none">
+                <h5 class="card-title">@{{ activity.user }}  {{ activity.created|timesince }} ago</h5>
+                <p class="card-text">Room: {{ activity.room}}</p>
+                <p class="card-text">- {{ activity.body|truncatewords:7 }}</p>
+                <hr>
+            </a>
+            {% endfor %}
+        </div>

@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{room.name|truncatewords:2}}: {{block.super}}
+{% endblock %}
+
+{% block content %}
+<style>
+.room-container{
+display: grid;
+grid-template-columns:3fr 1fr;
+}
+</style>
+
+
+<div class='room-container'>
+<!-- ------------------------------------------- -->
+<div>
+    <div class="card text mt-5">
+        <div class="card-header">
+            {{ room.name }}
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Descriptions</h5>
+            <p class="card-text">{{ room.content|safe|linebreaks }}</p>
+            <h6 class="card-subtitle mb-2 text-muted">Topic: <a href="{% url 'main' %}?q={{room.topic.name}}"> {{ room.topic }} </a></h6>
+            {% if request.user.is_authenticated and request.user not in members %}
+            <a href="" class="btn btn-secondary">Join</a>
+            {% endif %}
+        </div>
+
+        <div class="card-footer text-muted">
+            updated: {{room.updated|timesince}} ago | created: {{ room.created|date:'d.m.Y'}}
+        </div>
+
+    </div>
+
+
+    <div class="card mt-5">
+        <div class="card-header bg-info">
+            Messages
+        </div>
+        {% for message in room_messages %}
+        <div class="card-body bg-ligh" >
+            <blockquote class="blockquote mb-0">
+                <p><a href="{% url 'user' message.user.pk %}">@{{ message.user }} </a><small>{{ message.created|timesince }} ago</small>
+                {% if request.user == message.user %}
+                <a  class="btn btn-outline-danger" href="{% url 'delete-message' message.pk %}"> delete</a>
+                <a  class="btn btn-outline-danger" href="{% url 'update-message' message.pk %}"> Update</a>
+                {% endif %}
+                </p>
+                <footer class="blockquote-footer"> {{ message.body|safe }}</footer>
+             </blockquote>
+        </div>
+        {% endfor %}
+    </div>
+
+{% if request.user.is_authenticated and request.user in members or request.user == room.host %}
+    <form method="POST" class='mt-1'>
+        {% csrf_token %}
+        <div >
+            <input class = 'form-control' type = 'text' name='body' placeholder='Write message'>
+
+        </div>
+        <button type="submit" class="btn btn-primary mb-3 mt-1">Send</button>
+    </form>
+    {% else %}
+        <form method="POST" class='mt-1'>
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary mb-3 mt-1">Join</button>
+    </form>
+{% endif %}
+</div>
+<!-- ------------------------------------------------------- -->
+
+
+
+
+<div class="card mt-5">
+    <h5 class="card-header">Participants</h5>
+        <div class="card-body">
+            <h5 class="card-title">admin: <a>@{{ room.host }}</a></h5>
+            <p class="card-text"></p>
+            <hr>
+            {% for member in members %}
+                <h5 class="card-title">@{{ member }}</h5>
+                <p class="card-text"></p>
+                <hr>
+            {% endfor %}
+        </div>
+</div>
+<div>
+
+{% endblock %}

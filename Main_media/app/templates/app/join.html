@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form method='POST' action="{% url 'main' %}" >
+{% csrf_token %}
+
+<p>If you seriously want join our community, click the button?</p>
+
+<button type="submit" class="btn btn-primary">Send</button>
+<a href = '{{request.META.HTTP_REFERER}}'>Go back</a>
+
+</form>
+
+{% endblock %}

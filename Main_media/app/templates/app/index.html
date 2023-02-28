@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load app_tags %}
+{% block content %}
+<style>
+.home-container{
+display: grid;
+grid-template-columns:1fr 3fr 1fr;
+}
+</style>
+
+<div class = 'home-container' >
+
+{% include 'app/side.html' %}
+
+    <div>
+
+        {% for room in rooms %}
+        <div class="card text-center">
+            <div class="card-header">
+            <a href = "{% url 'user' room.host.pk %}">
+                @{{ room.host }}
+            </a>
+            </div>
+
+            <div class="card-body">
+                <h5 class="card-title"><a href="{% url 'room' room.pk %}">{{ room.name }}</a></h5>
+                    <a class="card-text" href="" >{{ room.topic.name }}</a>
+                    <br>
+                    {% if request.user == room.host %}
+                    <a href="{% url 'update-room' room.pk  %}" class="btn btn-secondary">Edit</a>
+                    <a href="{% url 'delete-room' room.pk  %}" class="btn btn-secondary">Delete</a>
+                    {% endif %}
+                    <br>
+                    <a href="{% url 'room' room.pk  %}" class="btn btn-primary">Go</a>
+            </div>
+
+            <div class="card-footer text-muted">
+                updated: {{ room.updated|timesince }} ago | created: {{ room.created|date:'d.m.Y' }}
+                <br>
+                <small>members: {{room.cnt}}</small>
+            </div>
+
+        </div>
+            {% endfor %}
+
+    </div>
+        <div>
+
+        {% include 'app/recent_activities.html' %}
+
+        </div>
+</div>
+
+</div>
+
+
+{% endblock %}

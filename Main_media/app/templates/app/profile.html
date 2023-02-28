@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{%  block title %}
+{{user.username}}:{{block.super}}
+{% endblock %}
+
+{% block content %}
+<style>
+.prof-container{
+display: grid;
+grid-template-columns:2fr 3fr 3fr;
+}
+</style>
+<div class="prof-container">
+
+{% include 'app/side.html' %}
+
+
+
+        <div>
+<div class="card" style="width: 48rem;">
+<!--   <img src="..." class="card-img-top" alt="..."> -->
+  <div class="card-body">
+    <h5 class="card-title">Username: {{ user.username }} </h5>
+    <p class="card-text"></p>
+  </div>
+  <ul class="list-group list-group-flush">
+
+    <li class="list-group-item">First name: {{ user.first_name }} </li>
+    <li class="list-group-item">Last name</li>
+
+    <li class="list-group-item">Gmail: {{ user.email }}</li>
+  </ul>
+  <div class="card-body">
+    <a href="#" class="card-link">Rooms: {{cnt }}</a>
+<!--     <a href="#" class="card-link">Another link</a> -->
+  </div>
+</div>
+        </div>
+
+        {% include 'app/recent_activities.html' %}
+
+
+</div>
+
+
+
+{% endblock %}
