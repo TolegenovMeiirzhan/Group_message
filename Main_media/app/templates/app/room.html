@@ -64,7 +64,7 @@ grid-template-columns:3fr 1fr;
         </div>
         <button type="submit" class="btn btn-primary mb-3 mt-1">Send</button>
     </form>
-    {% else %}
+    {% elif  request.user.is_authenticated %}
         <form method="POST" class='mt-1'>
         {% csrf_token %}
         <button type="submit" class="btn btn-primary mb-3 mt-1">Join</button>

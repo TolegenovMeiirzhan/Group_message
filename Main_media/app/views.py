@@ -46,9 +46,10 @@ def getUser(request, pk):
     user = User.objects.get(id=pk)
     rooms = user.room_set.all()
     cnt = rooms.count()
-    last_messages = Message.objects.filter(user__id = pk).order_by('-created')[:5]
+    room = Room.objects.filter(host__id =pk)
+    last_messages = Message.objects.filter(user__id=pk).order_by('-created')[:5]
     topics = Topic.objects.all()
-    context = {'user': user, 'rooms': rooms, 'activities':last_messages, 'cnt': cnt, 'topics': topics}
+    context = {'user': user, 'rooms': rooms, 'activities': last_messages, 'cnt': cnt, 'topics': topics, 'room': room}
     return render(request, 'app/profile.html', context)
 
 
@@ -142,11 +143,11 @@ def registerUser(request):
     if request.method =='POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            messages.success(request, 'User created!')
+            form.save()
+            messages.success(request, 'account created!')
             return redirect('main')
         else:
-            messages.error(request, 'You have error(s)!')
+            messages.error(request, 'Error!')
     else:
         form = RegisterForm()
     context = {'form': form, 'action': 'register'}

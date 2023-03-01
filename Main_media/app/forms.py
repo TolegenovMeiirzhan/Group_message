@@ -31,26 +31,35 @@ class LoginForm(AuthenticationForm):
         'class': 'form-control', 'autpcomplete': 'off'}))
 
 class RegisterForm(UserCreationForm):
-    username = forms.CharField(label='Username', widget=forms.TextInput(attrs={
-        'class': 'form-control', 'autocomplete': 'off'
-    }))
-    first_name = forms.CharField(label='First Name', widget =forms.TextInput(attrs={
-        'class': 'form-control', 'auto-complete': 'off'
-    }))
-    last_name = forms.CharField(label='Last Name', widget=forms.TextInput(attrs={
-        'class': 'form-control', 'autocomplete': 'off'
-    }))
-    email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={
-        'class': 'form-control', 'autocomplete': 'off'
-    }))
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={
-        'class': 'form-control', 'autocomplete': 'off'
-    }))
-    password2 = forms.CharField(label='Password Confirmation', widget=forms.PasswordInput(attrs={'class': 'form-control', 'autocomplete': 'off'}))
+    # username = forms.CharField(label='Username', widget=forms.TextInput(attrs={
+    #     'class': 'form-control', 'autocomplete': 'off'
+    # }))
+    # first_name = forms.CharField(label='First Name', widget =forms.TextInput(attrs={
+    #     'class': 'form-control', 'auto-complete': 'off'
+    # }))
+    # last_name = forms.CharField(label='Last Name', widget=forms.TextInput(attrs={
+    #     'class': 'form-control', 'autocomplete': 'off'
+    # }))
+    # email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={
+    #     'class': 'form-control', 'autocomplete': 'off'
+    # }))
+    # password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={
+    #     'class': 'form-control', 'autocomplete': 'off'
+    # }))
+    # password2 = forms.CharField(label='Password Confirmation', widget=forms.PasswordInput(attrs={'class': 'form-control', 'autocomplete': 'off'}))
 
     class META:
         model = User
         fields =('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control', 'autocomplete': 'off'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control', 'autocomplete': 'off'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control', 'autocomplete': 'off'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'password1': forms.PasswordInput(attrs={'class': 'form-control', 'autocomplete': 'off'}),
+            'password2': forms.PasswordInput(attrs={'class': 'form-control', 'autocomplete': 'off'})
+
+        }
 
 class MessageForm(forms.ModelForm):
     class Meta:

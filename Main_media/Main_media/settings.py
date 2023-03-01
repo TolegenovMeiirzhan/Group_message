@@ -69,6 +69,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'Main_media.wsgi.application'
+# AUTH_USER_MODEL = "users_management.UserManage"
+# AUTH_USER_MODEL = 'app.User'
 
 
 # Database
