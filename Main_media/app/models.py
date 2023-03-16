@@ -19,7 +19,6 @@ class Room(models.Model):
     host = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=200, verbose_name='Room name')
-    # photo = models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True)
     # slug = models.SlugField(max_length=200, verbose_name='URL', unique=True)
     content = models.TextField(null=True, blank=True)
     participants = models.ManyToManyField(
@@ -42,6 +41,7 @@ class Message(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     body = models.TextField()
+    photo = models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
     # slug = models.SlugField(max_length=200, )
